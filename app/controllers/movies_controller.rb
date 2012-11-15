@@ -16,7 +16,7 @@ class MoviesController < ApplicationController
     end
     @all_ratings = Movie.all_ratings
     @selected_ratings = params[:ratings] || session[:ratings] || {}
-    
+
     if @selected_ratings == {}
       @selected_ratings = Hash[@all_ratings.map {|rating| [rating, rating]}]
     end
@@ -62,7 +62,8 @@ class MoviesController < ApplicationController
 
   def search_tmdb
     # hardwire to simulate failure
+    @movies = Movie.find_in_tmdb(params[:search_terms])
     flash[:warning] = "'#{params[:search_terms]}' was not found in TMDb."
-    redirect_to movies_path
+    #redirect_to movies_path
   end
 end

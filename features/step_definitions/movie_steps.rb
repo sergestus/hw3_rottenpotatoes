@@ -41,26 +41,28 @@ Then /I should see all the movies/ do
         end
 
 Then /I shouldn't see any movies/ do
+        printf all("table#movies tbody tr").to_s
+        printf all("table#movies tbody tr").count.to_s
         assert all("table#movies tbody tr").count == 0
 end
 
 Then /I should(n't)? see: (.*)/ do |not_present, title_list|
         titles = title_list.split(", ")
         titles.each do |title|
-                if page.respond_to? :should
-                        if not_present then
-                        page.should have_content(title) == false
-                else
-                        page.should have_content(title)
-                end
-                else
+                #if page.respond_to? :should
+                #        if not_present then
+                #               page.should have_content(title) == false
+                #        else
+                #               page.should have_content(title)
+                #        end
+                #else
                         if not_present then
                                 assert page.has_content?(title) == false
                         else
                                 assert page.has_content?(title)
                         end
                 
-                end
+                #end
         end
 end
 
